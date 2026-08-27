@@ -5,10 +5,6 @@ class Solution(object):
         for ch in s:
             freq[ord(ch) - ord('a')] += 1
 
-        n = len(s)
-        prefix = []
-        answer = ""
-
             # Continue matching target
             if freq[target_idx] > 0:
                 freq[target_idx] -= 1
