@@ -7,9 +7,3 @@ class Solution(object):
 
             # Continue matching target
             if freq[target_idx] > 0:
-                freq[target_idx] -= 1
-                prefix.append(target[i])
-            else:
-                break
-
-        return answer
