@@ -9,14 +9,7 @@ class Solution(object):
         prefix = []
         answer = ""
 
-        for i in range(n):
-            target_idx = ord(target[i]) - ord('a')
-
-            # Try choosing the smallest character greater than target[i]
-            for j in range(target_idx + 1, 26):
-                if freq[j] > 0:
-                    freq[j] -= 1
-
+     
                     result = prefix + [chr(j + ord('a'))]
 
                     # Add remaining characters in sorted order
