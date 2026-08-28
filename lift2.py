@@ -9,16 +9,7 @@ class Solution(object):
             if freq[target_idx] > 0:
 class Solution(object):
     def lexPalindromicPermutation(self, s, target):
-        """
-        :type s: str
-        :type target: str
-        :rtype: str
-        """
-
-        count = [0] * 26
-
-        for ch in s:
-            count[ord(ch) - ord('a')] += 1
+        """d('a')] += 1
 
         # A palindrome can have at most one odd-frequency character
         odd = 0
