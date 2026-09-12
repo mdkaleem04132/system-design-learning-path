@@ -1,41 +1,41 @@
 class Solution(object):
-    def countCommas(self, n):
-        """
-        :type n: int
-        :rtype: int
-        """
-        You are given an integer n.
+    def maximumWeight(self, intervals):
+        intervals = sorted(
+            [(l, r, w, i) for i, (l, r, w) in enumerate(intervals)],
+            key=lambda x: x[1]
+        )
 
-Return the total number of commas used when writing all integers from [1, n] (inclusive) in standard number formatting.
+        n = len(intervals)
 
-In standard formatting:
+        ends = [x[1] for x in intervals]
 
-A comma is inserted after every three digits from the right.
-Numbers with fewer than 4 digits contain no commas.
- 
+        import bisect
 
-Example 1:
+        prev = []
+        for l, r, w, idx in intervals:
+            prev.append(bisect.bisect_left(ends, l))
 
-Input: n = 1002
+        dp = [[(0, ()) for _ in range(5)] for _ in range(n + 1)]
 
-Output: 3
+        for i in range(1, n + 1):
+            l, r, w, idx = intervals[i - 1]
+            p = prev[i - 1]
 
-Explanation:
+            for k in range(1, 5):
+                skip_score, skip_indices = dp[i - 1][k]
 
-The numbers "1,000", "1,001", and "1,002" each contain one comma, giving a total of 3.
+                take_score, take_indices = dp[p][k - 1]
+                take_score += w
+                take_indices = tuple(sorted(take_indices + (idx,)))
 
-Example 2:
+                if take_score > skip_score:
+                    dp[i][k] = (take_score, take_indices)
+                elif take_score < skip_score:
+                    dp[i][k] = (skip_score, skip_indices)
+                else:
+                    if take_indices < skip_indices:
+                        dp[i][k] = (take_score, take_indices)
+                    else:
+                        dp[i][k] = (skip_score, skip_indices)
 
-Input: n = 998
-
-Output: 0
-
-Explanation:
-
-All numbers from 1 to 998 have fewer than four digits. Therefore, no commas are used.
-
- 
-
-Constraints:
-
-1 <= n <= 105
+        return list(dp[n][4][1])
